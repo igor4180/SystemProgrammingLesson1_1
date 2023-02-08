@@ -7,6 +7,10 @@ namespace CSharpSPLesson1
 	 {
 		[DllImport("user32.dll")]
 		private static extern int MessageBox(IntPtr hWnd, string lpText, string lpCaption, uint uType);
+		[DllImport("user32.dll")]
+		private static extern IntPtr FindWindowW(string lpClassName, string lpWindowName);
+		[DllImport("user32.dll")]
+		private static extern long SendMessageW(IntPtr hWnd, uint Msg, string wParam, string lParam);
 
 		const uint MB_ICONWARNING = 0x030;
 		const uint MB_CANCELTRYCONTINUE = 0x06;
@@ -21,27 +25,40 @@ namespace CSharpSPLesson1
 
 		static void Main(string[] args)
 		{
-			//MessageBox(IntPtr.Zero, "Hello word", "Title", MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2);
-			int minNumber = 0;
-			int maxNumber = 100;
-			Random random = new Random();
-			int result = random.Next(minNumber, maxNumber);
-			int answer = 0;
-			while ((answer = MyMessageBox(result)) != 6)
+			string caption = "";
+			Process[] processes = Process.GetProcesses();
+			foreach (Process p in processes)
 			{
-				if (answer == 2)
+				if (p.ProcessName == "notepad")
 				{
-					minNumber = result;
-					result = random.Next(minNumber, maxNumber);
-				}
-				if (answer == 7)
-				{
-					maxNumber = result;
-					result = random.Next(minNumber, maxNumber);
+					caption = p.MainWindowTitle;
 				}
 			}
-			MessageBox(IntPtr.Zero, "Ура, я прочитал ваши мысли! Число " + result.ToString(),
-				"Число угадано", 0x0);
+			Console.WriteLine(caption);
+			IntPtr ptr = FindWindow("notepad");
+			IntPtr ptr2 = FindWindowW("notepad", "Безымянный - Блокнот");
+			//MessageBox(IntPtr.Zero, "Hello word", "Title", MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2); //1-2 задания
+			//int minNumber = 0;
+			//int maxNumber = 100;
+			//Random random = new Random();
+			//int result = random.Next(minNumber, maxNumber);
+			//int answer = 0;
+			//while ((answer = MyMessageBox(result)) != 6)
+			//{
+			//	if (answer == 2)
+			//	{
+			//		minNumber = result;
+			//		result = random.Next(minNumber, maxNumber);
+			//	}
+			//	if (answer == 7)
+			//	{
+			//		maxNumber = result;
+			//		result = random.Next(minNumber, maxNumber);
+			//	}
+			//}
+			//MessageBox(IntPtr.Zero, "Ура, я прочитал ваши мысли! Число " + result.ToString(),
+			//	"Число угадано", 0x0);
+
 			//Process process = new Process();
 			//process.StartInfo = new ProcessStartInfo("notepad.exe");
 			//process.Start();
