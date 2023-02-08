@@ -8,9 +8,9 @@ namespace CSharpSPLesson1
 		[DllImport("user32.dll")]
 		private static extern int MessageBox(IntPtr hWnd, string lpText, string lpCaption, uint uType);
 		[DllImport("user32.dll")]
-		private static extern IntPtr FindWindowW(string lpClassName, string lpWindowName);
+		private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 		[DllImport("user32.dll")]
-		private static extern long SendMessageW(IntPtr hWnd, uint Msg, string wParam, string lParam);
+		private static extern long SendMessage(IntPtr hWnd, uint Msg, string wParam, string lParam);
 
 		const uint MB_ICONWARNING = 0x030;
 		const uint MB_CANCELTRYCONTINUE = 0x06;
@@ -35,8 +35,8 @@ namespace CSharpSPLesson1
 				}
 			}
 			Console.WriteLine(caption);
-			IntPtr ptr = FindWindow("notepad");
-			IntPtr ptr2 = FindWindowW("notepad", "Безымянный - Блокнот");
+			IntPtr ptr = FindWindow("notepad", caption);
+			//IntPtr ptr2 = FindWindowW("notepad", "Безымянный - Блокнот");
 			//MessageBox(IntPtr.Zero, "Hello word", "Title", MB_ICONWARNING | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2); //1-2 задания
 			//int minNumber = 0;
 			//int maxNumber = 100;
